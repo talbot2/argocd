@@ -51,7 +51,7 @@ jobs:
 
 
     # Pull and Install the ArgoCD install chart and check if pods were created
-    - name: Install Kubectl (amd64)
+    - name: Install Argo CD
       run: |
         kubectl create namespace argocd
         kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
