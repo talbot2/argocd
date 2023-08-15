@@ -40,10 +40,16 @@ jobs:
         cluster-name: '${{ env.name }}'
 
 
-    - name: Kubectl Installer
-      uses: Azure/setup-kubectl@v3
+    - name: Install Kubectl
+      uses: Azure/cli@v1
       with:
-        version: default
+        inlineScript: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+        
+    #- name: Kubectl Installer
+    #  uses: Azure/setup-kubectl@v3
+    #  with:
+    #    version: default
 
 
     - name: Kubectl Get Pods
