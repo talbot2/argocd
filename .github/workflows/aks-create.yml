@@ -2,7 +2,7 @@ name: AKS-Create
 
 env:
   resourceGroup: 'argocd-demo-rg'
-  location: 'west europe'
+  location: 'westeurope'
   name: 'argocd-main-aks'
   kubernetes-version: '1.26.3'
 
@@ -28,5 +28,5 @@ jobs:
     - name: Azure CLI Action
       uses: Azure/cli@v1
       with:
-        inlineScript: az group create -l ${{ env.location }} -n ${{ env.name }} 
-                      az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} --kubernetes-version ${{ env.kubernetesVersion }} --generate-ssh-keys
+        inlineScript: az group create -l ${{ env.location }} -n ${{ env.resourceGroup }} 
+                      # az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} --kubernetes-version ${{ env.kubernetesVersion }} --generate-ssh-keys
