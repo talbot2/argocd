@@ -1,0 +1,69 @@
+name: AKS-Create
+
+env:
+  resourceGroup: 'argocd-demo-rg'
+  location: 'westeurope'
+  name: 'argocd-main-aks'
+
+on:
+  # Run triggered manually through GitHub Actions, can be configured to run based on pushes/pulls
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    # Az Login with credentials stored as secrets in GitHub
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+
+    # Resource group creation    
+    - name: Resource Group Creation
+      uses: Azure/cli@v1
+      with:
+        inlineScript: az group create -l ${{ env.location }} -n ${{ env.resourceGroup }} 
+
+
+    # Azure Kubernetes Service creation
+    - name: AKS Creation
+      uses: Azure/cli@v1
+      with:
+        inlineScript: az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} -k 1.26.3 --generate-ssh-keys
+
+
+    # Login to the created AKS cluster on the Ubuntu runner
+    - name: Set AKS context
+      id: set-context
+      uses: azure/aks-set-context@v3
+      with:
+        resource-group: '${{ env.resourceGroup }}' 
+        cluster-name: '${{ env.name }}'
+
+
+    # Install Kubectl on the Ubuntu runner
+    - name: Install Kubectl (amd64)
+      run: |
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+
+    # Pull and Install the ArgoCD install chart and check if pods were created
+    - name: Install Kubectl (amd64)
+      run: |
+        kubectl create namespace argocd
+        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    
+          
+    # Sleep 30 seconds
+    - name: Sleep for 30 seconds
+      run: sleep 30s
+      shell: bash
+
+
+    # Check pod status of argocd namespace
+    - name: Kubectl Get Pods
+      run: |
+        kubectl get pods -n argocd -o wide
