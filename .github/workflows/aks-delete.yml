@@ -23,10 +23,10 @@ jobs:
     - name: AKS Deletion
       uses: Azure/cli@v1
       with:
-        inlineScript: az aks delete -g ${{ env.resourceGroup }} -n ${{ env.name }}
+        inlineScript: az aks delete -g ${{ env.resourceGroup }} -n ${{ env.name }} --yes
 
         
     - name: Resource Group Deletion
       uses: Azure/cli@v1
       with:
-        inlineScript: az group delete -l ${{ env.location }} -n ${{ env.resourceGroup }} 
+        inlineScript: az group delete -l ${{ env.location }} -n ${{ env.resourceGroup }} --yes
