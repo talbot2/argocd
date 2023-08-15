@@ -1,6 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+name: AKS-Create
 
 env:
   resourceGroup: 'argocd-demo-rg'
@@ -8,41 +6,29 @@ env:
   name: 'argocd-main-aks'
   kubernetes-version: '1.26.3'
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    
     - name: Azure Login
-      uses: Azure/login@v1.4.6
+      uses: Azure/login@v1
       with:
-        # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-        #creds: ${{ secrets.AZURE_CREDENTIALS }}
-        # ClientId of the Azure Service principal created.
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        # TenantId of the Azure Service principal created.
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        # Azure subscriptionId
         subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+
     - name: Azure CLI Action
-      uses: Azure/cli@v1.0.8
+      uses: Azure/cli@v1
       with:
-        # Specify the script here
         inlineScript: az group create -l ${{ env.location }} -n ${{ env.name }} 
                       az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} --kubernetes-version ${{ env.kubernetesVersion }} --generate-ssh-keys
