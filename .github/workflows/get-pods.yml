@@ -27,12 +27,7 @@ jobs:
           resource-group: '${{ env.resourceGroup }}' 
           cluster-name: '${{ env.name }}'
 
-          
-      - name: Install Kubectl (amd64)
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
 
       - name: Kubectl Get Pods
         run: |
-          kubectl get pods -n all-namespaces
+          kubectl get pods -n argocd
