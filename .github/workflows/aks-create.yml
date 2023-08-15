@@ -4,7 +4,7 @@ env:
   resourceGroup: 'argocd-demo-rg'
   location: 'westeurope'
   name: 'argocd-main-aks'
-  kubernetes-version: '1.26.3'
+  kubernetesVersion: '1.26.3'
 
 on:
   push:
@@ -34,4 +34,4 @@ jobs:
     - name: AKS Creation
       uses: Azure/cli@v1
       with:
-        inlineScript: az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} -k 1.26.3 --generate-ssh-keys
+        inlineScript: az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} -k ${{ kubernetesVersion }}
