@@ -2,7 +2,6 @@ name: AKS-Delete
 
 env:
   resourceGroup: 'argocd-demo-rg'
-  location: 'westeurope'
   name: 'argocd-main-aks'
 
 on:
@@ -28,4 +27,4 @@ jobs:
     - name: Resource Group Deletion
       uses: Azure/cli@v1
       with:
-        inlineScript: az group delete -l ${{ env.location }} --yes
+        inlineScript: az group delete -n ${{ env.resourceGroup }} --yes
