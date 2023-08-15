@@ -1,0 +1,32 @@
+name: AKS-Create
+
+env:
+  resourceGroup: 'argocd-demo-rg'
+  location: 'westeurope'
+  name: 'argocd-main-aks'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+        enable-AzPSSession: true 
+
+                      
+    - name: AKS Deletion
+      uses: Azure/cli@v1
+      with:
+        inlineScript: az aks delete -g ${{ env.resourceGroup }} -n ${{ env.name }}
+
+        
+    - name: Resource Group Deletion
+      uses: Azure/cli@v1
+      with:
+        inlineScript: az group delete -l ${{ env.location }} -n ${{ env.resourceGroup }} 
