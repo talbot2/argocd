@@ -43,11 +43,4 @@ jobs:
     - name: AKS Get Credentials
       uses: Azure/cli@v1
       with:
-        inlineScript: az aks get-credentials -g ${{ env.resourceGroup }} -n ${{ env.name }}
-
-    - name: Kubectl Get Pods
-      uses: Azure/cli@v1
-      with:
-        inlineScript: kubectl get pods -n all-namespaces
-
-      
+        inlineScript: az aks get-credentials -g ${{ env.resourceGroup }} -n ${{ env.name }}     
