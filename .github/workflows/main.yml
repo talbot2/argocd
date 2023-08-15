@@ -1,4 +1,4 @@
-name: AKS-Create
+name: Main K8saaS
 
 env:
   resourceGroup: 'argocd-demo-rg'
