@@ -29,4 +29,4 @@ jobs:
     - name: Resource Group Deletion
       uses: Azure/cli@v1
       with:
-        inlineScript: az group delete -l ${{ env.location }} -n ${{ env.resourceGroup }} --yes
+        inlineScript: az group delete -l ${{ env.location }} --yes
