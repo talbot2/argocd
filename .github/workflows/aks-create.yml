@@ -29,4 +29,4 @@ jobs:
       uses: Azure/cli@v1
       with:
         inlineScript: az group create -l ${{ env.location }} -n ${{ env.resourceGroup }} 
-                      # az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} --kubernetes-version ${{ env.kubernetesVersion }} --generate-ssh-keys
+                      az aks create -g ${{ env.resourceGroup }} -n ${{ env.name }} --kubernetes-version ${{ env.kubernetesVersion }} --generate-ssh-keys
