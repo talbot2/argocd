@@ -40,17 +40,10 @@ jobs:
           rm argocd-linux-amd64
           sleep 30s
           kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-          kubectl port-forward svc/argocd-server -n argocd 8080:443 &
-          sleep 30s
-          curl http://localhost:8080
+    
 
 
-      - name: Argo CD Login Configuration
+      - name: Argo CD Login Details
         run: |
-          argocd admin initial-password -n argocd
-
-          
-      - name: Kubectl Get Pods
-        run: |
-          kubectl get pods -n argocd
-          kubectl get deployments -owide
+          kubectl get service argocd-server -n argocd
+          kubectl get -n argocd secret/argocd-initial-admin-secret -ogo-template='{{printf "Username: admin\nPassword: %s\n" (.data.password | base64decode)}}'
