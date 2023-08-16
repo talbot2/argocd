@@ -41,6 +41,8 @@ jobs:
           sleep 30s
           kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
           kubectl port-forward svc/argocd-server -n argocd 8080:443 &
+          sleep 30s
+          curl http://localhost:8080
 
 
       - name: Argo CD Login Configuration
