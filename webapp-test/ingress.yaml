@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: apache
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: apache.135.8.44.222.nip.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: apache
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
