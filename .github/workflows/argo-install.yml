@@ -51,6 +51,7 @@ jobs:
           kubectl get service argocd-server -n argocd
           kubectl get -n argocd secret/argocd-initial-admin-secret -ogo-template='{{printf "Username: admin\nPassword: %s\n" (.data.password | base64decode)}}'
 
+
       - name: Argo CD Webapp Test Deploy
         run: |
           kubectl config set-context --current --namespace=argocd
