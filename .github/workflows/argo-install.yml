@@ -38,12 +38,20 @@ jobs:
           curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
           rm argocd-linux-amd64
+
+
+      - name: Expose Argo Server with type LoadBalancer
+        run: |
           sleep 30s
           kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
     
-
 
       - name: Argo CD Login Details
         run: |
           kubectl get service argocd-server -n argocd
           kubectl get -n argocd secret/argocd-initial-admin-secret -ogo-template='{{printf "Username: admin\nPassword: %s\n" (.data.password | base64decode)}}'
+
+      - name: Argo CD Webapp Test Deploy
+        run: |
+          kubectl config set-context --current --namespace=argocd
+          argocd app create guestbook --repo https://github.com/talbot2/argocd.git --path ./webapp-test --dest-namespace webapp-test --project webapp-test --dest-server https://kubernetes.default.svc --sync-policy automated --sync-option Prune=true --self-heal
