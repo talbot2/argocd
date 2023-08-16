@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: Test Application
+spec:
+  destination:
+    name: ''
+    namespace: app-test
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: application
+    repoURL: 'https://github.com/talbot2/argocd'
+    targetRevision: HEAD
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
