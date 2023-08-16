@@ -1,21 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: Test Application
+  name: Webapp Test
 spec:
   destination:
     name: ''
-    namespace: app-test
+    namespace: webapp-test
     server: 'https://kubernetes.default.svc'
   source:
-    path: application
+    path: webapp-test/
     repoURL: 'https://github.com/talbot2/argocd'
     targetRevision: HEAD
   sources: []
-  project: default
+  project: webapp-test
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
