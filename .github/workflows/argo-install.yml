@@ -54,5 +54,5 @@ jobs:
 
       - name: Argo CD Webapp Test Deploy
         run: |
-          kubectl config set-context --current --namespace=argocd
-          argocd app create guestbook --repo https://github.com/talbot2/argocd.git --path ./webapp-test --dest-namespace webapp-test --project webapp-test --dest-server https://kubernetes.default.svc --sync-policy automated --sync-option Prune=true --self-heal
+          # kubectl config set-context --current --namespace=argocd
+          # argocd app create guestbook --repo https://github.com/talbot2/argocd.git --path ./webapp-test --dest-namespace webapp-test --project webapp-test --dest-server https://kubernetes.default.svc --sync-policy automated --sync-option Prune=true --self-heal
