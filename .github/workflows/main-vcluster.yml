@@ -18,9 +18,9 @@ env:
   resourceGroup: 'argocd-demo-rg'
   name: 'argocd-main-aks'
   vclusterName: 'vcluster-${{ github.event.inputs.environment }}-aks'
-  argo-ip: '${{ secrets.ARGO-IP }}'
-  argo-username: '${{ secrets.ARGO-USERNAME }}'
-  argo-password: '${{ secrets.ARGO-PASSWORD }}'
+  argo-ip: '${{ github.event.inputs.environment.argoip }}'
+  argo-username: 'admin'
+  argo-password: '${{ github.event.inputs.argopassword }}'
 
 jobs:
   build:
