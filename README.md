@@ -1,6 +1,6 @@
-## Argo CD Demo with vCluster
+# Argo CD Demo with vCluster
 
-# Steps to reproduce:
+## Steps to reproduce:
   1. Run aks-create.yml Github Actions job to create the **argocd-main-aks** cluster inside of the **argocd-demo-rg** resource group.
      The aks-create job will install the latest versions of kubectl, helm, vcluster and argocd, as well as, deploying the Argo CD application and providing the login credentials
 
