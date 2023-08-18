@@ -41,7 +41,7 @@ jobs:
 
     - name: Install arkade
       uses: alexellis/setup-arkade@v3
-    - uses: alexellis/arkade@master
+    - uses: alexellis/arkade-get@master
       with:
         kubectl: latest
         helm: latest
