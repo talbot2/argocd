@@ -8,10 +8,7 @@ on:
         required: true
         default: 'dev'
       argoip:
-        description: 'Insert Argo IP Address'     
-        required: true
-      argopassword:
-        description: 'Insert Argo Password'     
+        description: 'Insert Argo Servr IP Address'     
         required: true
 
 env:
@@ -61,11 +58,7 @@ jobs:
 
       - name: Argo CD Login and Cluster Add
         run: |
-          echo "${{ env.argo-ip }}"
-          echo "${{ env.argo-username }}"
-          echo "${{ env.argo-password }}"
-          sleep 10s
-          argocd login ${{ env.argo-ip }} --username ${{ env.argo-username }} --password ${{ env.argo-password }} --insecure --skip-test-tls
+          argocd login ${{ env.argo-ip }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure --skip-test-tls
           argocd cluster add ${{ env.vclusterName }}
 
 
