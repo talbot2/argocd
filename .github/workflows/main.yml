@@ -70,8 +70,8 @@ jobs:
 
     - name: Kubectl Get Ingress
       run: |
-        sleep 60s
-        kubectl get services --namespace ingress-basic -o wide -w ingress-nginx-controller
+        sleep 30s
+        kubectl get service ingress-nginx-controller -n ingress-basic -o wide
 
 
     - name: Install Argo CD
