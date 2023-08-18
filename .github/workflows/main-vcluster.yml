@@ -65,7 +65,7 @@ jobs:
           echo "${{ env.argo-username }}"
           echo "${{ env.argo-password }}"
           sleep 10s
-          argocd login ${{ env.argo-ip }} --username ${{ env.argo-username }} --password ${{ env.argo-password }} --insecure
+          argocd login ${{ env.argo-ip }} --username ${{ env.argo-username }} --password ${{ env.argo-password }} --insecure --skip-test-tls
           vcluster cluster add ${{ env.vclusterName }}
 
 
