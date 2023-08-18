@@ -41,19 +41,9 @@ jobs:
 
     - name: Install arkade
       uses: alexellis/setup-arkade@v3
-
-
-    - name: Setup arkade
-      uses: alexellis/arkade@master
-
-
-    - name: Get Dependencies
-      run: |
-        arkade get kubectl
-        which kubectl
-        arkade get helm
-        which helm
-        arkade get vcluster
-        which vcluster
-        arkade get argocd
-        which argocd
+    - uses: alexellis/arkade@master
+      with:
+        kubectl: latest
+        helm: latest
+        vcluster: latest
+        argocd: latest
