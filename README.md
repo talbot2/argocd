@@ -16,7 +16,8 @@
   5. Once the new password has been created you can run the *vcluster-create.yml* job to create a new virtual cluster inside of the main aks cluster. You are required to provide the host IP address of Argo Cd and
      and a name for the new environment. If no name is provided it will default to **vcluster-dev-aks**. You should see this cluster update on the Argo CD brower under the **Settings** > **Cluster** tab.
 
-    ![image](https://github.com/talbot2/argocd/assets/99027661/b1e24071-e983-4602-b873-7030d67ab34e)
+    ![image](https://github.com/talbot2/argocd/assets/99027661/ba463eb8-3955-48e2-bd82-a77dce464f43)
+
 
 
     ![image](https://github.com/talbot2/argocd/assets/99027661/529231a4-214a-4325-bc6d-ccb577a784c9)
