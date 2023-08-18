@@ -1,4 +1,4 @@
-name: Main K8saaS
+name: Main K8saaS AKS
 
 env:
   resourceGroup: 'argocd-demo-rg'
