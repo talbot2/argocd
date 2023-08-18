@@ -39,61 +39,21 @@ jobs:
         cluster-name: '${{ env.name }}'
 
 
-    - name: Install Kubectl (amd64)
+    - name: Install arkade
+      uses: alexellis/setup-arkade@v3
+
+
+    - name: Setup arkade
+      uses: alexellis/arkade@master
+
+
+    - name: Get Dependencies
       run: |
-        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
-
-    - name: Kubectl Get Pods
-      run: |
-        kubectl get pods -n kube-system
-
-
-    - name: Install Helm
-      run: |
-        curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-        sudo apt-get install apt-transport-https --yes
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-        sudo apt-get update
-        sudo apt-get install helm
-        sleep 60s
-        helm version
-        
-
-    - name: Install Nginx Ingress Controller
-      run: |
-        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-        helm repo update
-        kubectl create ns ingress-basic
-        helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingress-basic --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz
-
-
-    - name: Kubectl Get Ingress
-      run: |
-        sleep 30s
-        kubectl get service ingress-nginx-controller -n ingress-basic -o wide
-
-
-    - name: Install Argo CD
-      run: |
-        kubectl create namespace argocd
-        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-
-    - name: Install Argo CD CLI
-      run: |
-        curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-        sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-        rm argocd-linux-amd64
-
-
-    - name: Expose Argo Server with type LoadBalancer
-      run: |
-        kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-        sleep 90s
-    
-
-    - name: Argo CD Login Details
-      run: |
-        kubectl get service argocd-server -n argocd
-        kubectl get -n argocd secret/argocd-initial-admin-secret -ogo-template='{{printf "Username: admin\nPassword: %s\n" (.data.password | base64decode)}}'
+        arkade get kubectl
+        which kubectl
+        arkade get helm
+        which helm
+        arkade get vcluster
+        which vcluster
+        arkade get argocd
+        which argocd
