@@ -1,4 +1,4 @@
-name: Argo CD Install
+name: vcluster Install
 
 env:
   resourceGroup: 'argocd-demo-rg'
