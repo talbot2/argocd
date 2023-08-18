@@ -50,3 +50,15 @@ jobs:
         run: |
           kubectl get service argocd-server -n argocd
           kubectl get -n argocd secret/argocd-initial-admin-secret -ogo-template='{{printf "Username: admin\nPassword: %s\n" (.data.password | base64decode)}}'
+
+
+      - name: Argo CD Webapp Creation
+        run: |
+          kubectl create namespace webapp
+          argocd app create webapp-guestbook --repo https://github.com/talbot2/argocd.git \
+            --path ./webapp-test \
+            --dest-namespace webapp --dest-server https://kubernetes.default.svc \
+            --directory-recurse \
+            --sync-policy automated \
+            --sync-option Prune=true \
+            --self-heal
