@@ -7,6 +7,12 @@ on:
         description: 'Define environment name (dev, test, prod)'     
         required: true
         default: 'dev'
+      argoip:
+        description: 'Insert Argo IP Address'     
+        required: true
+      argopassword:
+        description: 'Insert Argo Password'     
+        required: true
 
 env:
   resourceGroup: 'argocd-demo-rg'
