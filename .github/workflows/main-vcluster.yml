@@ -10,18 +10,14 @@ on:
 
 env:
   resourceGroup: 'argocd-demo-rg'
-  name: 'argocd-${{ github.event.inputs.environment }}-aks'
+  name: 'argocd-main-aks'
+  vclusterName: 'argocd-${{ github.event.inputs.environment }}-aks'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    
-      - name: Print Environment 
-        run: |
-          echo "Env: ${{ github.event.inputs.environment }}" 
-
 
       - name: Azure Login
         uses: azure/login@v1
@@ -45,6 +41,13 @@ jobs:
           helm: latest
           vcluster: latest
           argocd: latest
+
+
+      - name: Create vCluster
+        run: |
+          vcluster create ${{ env.vclusterName }} --expose --namespace ${{ env.vclusterName }} --create-namespace
+          sleep 60s
+          kubectl get pods -n ${{ env.vclusterName }}
 
 
       
