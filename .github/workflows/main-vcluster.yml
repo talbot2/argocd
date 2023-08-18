@@ -11,7 +11,7 @@ on:
 env:
   resourceGroup: 'argocd-demo-rg'
   name: 'argocd-main-aks'
-  vclusterName: 'argocd-${{ github.event.inputs.environment }}-aks'
+  vclusterName: 'vcluster-${{ github.event.inputs.environment }}-aks'
 
 jobs:
   build:
