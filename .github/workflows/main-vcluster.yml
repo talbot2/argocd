@@ -7,9 +7,6 @@ on:
         description: 'Define environment name (dev, test, prod)'     
         required: true
         default: 'dev'
-      password:
-        description: 'Enter Argo CD admin password'
-        required: true
 
 env:
   resourceGroup: 'argocd-demo-rg'
