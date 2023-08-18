@@ -1,4 +1,4 @@
-name: vcluster Install
+name: Main K8saaS vcluster
   
 on:
   workflow_dispatch:
