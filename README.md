@@ -18,6 +18,8 @@
 
     ![image](https://github.com/talbot2/argocd/assets/99027661/b1e24071-e983-4602-b873-7030d67ab34e)
 
-    ![image](https://github.com/talbot2/argocd/assets/99027661/f0ac27c7-cb76-49d3-92ac-4cdf8fd9372b)
+
+    ![image](https://github.com/talbot2/argocd/assets/99027661/529231a4-214a-4325-bc6d-ccb577a784c9)
+
 
   6. Once the main and virtual clusters are no longer required you can run the *aks-delete.yml* job to delete the entire cluster.
