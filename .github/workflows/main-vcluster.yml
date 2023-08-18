@@ -61,7 +61,11 @@ jobs:
 
       - name: Argo CD Login and Cluster Add
         run: |
-          argocd login ${{ env.argo-ip }} --name ${{ env.argo-name }} --password ${{ env.argo-password }}
+          echo "${{ env.argo-ip }}\n"
+          echo "${{ env.argo-name }}\n"
+          echo "${{ env.argo-password }}\n"
+          sleep 10s
+          argocd login ${{ env.argo-ip }} --username ${{ env.argo-name }} --password ${{ env.argo-password }}
           vcluster cluster add ${{ env.vclusterName }}
 
 
