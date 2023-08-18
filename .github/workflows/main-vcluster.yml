@@ -1,17 +1,27 @@
 name: vcluster Install
-
-env:
-  resourceGroup: 'argocd-demo-rg'
-  name: 'argocd-main-aks'
   
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Define environment name (dev, test, prod)'     
+        required: true
+        default: 'dev'
+
+env:
+  resourceGroup: 'argocd-demo-rg'
+  name: 'argocd-${{ github.event.inputs.environment }}-aks'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+    
+      - name: Print Environment 
+        run: |
+          echo "Env: ${{ github.event.inputs.environment }}" 
+
 
       - name: Azure Login
         uses: azure/login@v1
@@ -27,18 +37,14 @@ jobs:
           cluster-name: '${{ env.name }}'
 
 
-      - name: Install vcluster CLI (amd64)
-        run: |
-          curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/latest/download/vcluster-linux-amd64"
-          sudo install -c -m 0755 vcluster /usr/local/bin
-          rm -f vcluster
-          vcluster --version
+      - name: Install Arkade and Dependencies
+        uses: alexellis/setup-arkade@v3
+      - uses: alexellis/arkade-get@master
+        with:
+          kubectl: latest
+          helm: latest
+          vcluster: latest
+          argocd: latest
 
 
-      - name: Create values.yaml and Deploy vcluster
-        run: |
-          kubectl create namespace vcluster
-          echo -e "vcluster: \n  image: rancher/k3s:v1.23.5-k3s1" > values.yaml
-          helm upgrade --install my-vcluster vcluster --values values.yaml --repo https://charts.loft.sh --namespace vcluster --repository-config=''
-          sleep 30s
-          kubectl get pods -n vcluster
+      
