@@ -1,4 +1,4 @@
-name: AKS-Delete
+name: AKS Delete
 
 env:
   resourceGroup: 'argocd-demo-rg'
