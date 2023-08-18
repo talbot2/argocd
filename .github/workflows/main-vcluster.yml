@@ -7,11 +7,17 @@ on:
         description: 'Define environment name (dev, test, prod)'     
         required: true
         default: 'dev'
+      password:
+        description: 'Enter Argo CD admin password'
+        required: true
 
 env:
   resourceGroup: 'argocd-demo-rg'
   name: 'argocd-main-aks'
   vclusterName: 'vcluster-${{ github.event.inputs.environment }}-aks'
+  argo-ip: '${{ secrets.ARGO-IP }}'
+  argo-username: '${{ secrets.ARGO-USERNAME }}'
+  argo-password: '${{ secrets.ARGO-PASSWORD }}'
 
 jobs:
   build:
@@ -45,9 +51,15 @@ jobs:
 
       - name: Create vCluster
         run: |
-          vcluster create ${{ env.vclusterName }} --expose --namespace ${{ env.vclusterName }} --create-namespace
+          vcluster create ${{ env.vclusterName }} --expose --namespace ${{ env.vclusterName }} --create-namespace --kube-config-context-name ${{ env.
           sleep 60s
           kubectl get pods -n ${{ env.vclusterName }}
+
+
+      - name: Argo CD Login and Cluster Add
+        run: |
+          argocd login ${{ env.argo-ip }} --name ${{ env.argo-name }} --password ${{ env.argo-password }}
+          vcluster cluster add ${{ env.vclusterName }}
 
 
       
