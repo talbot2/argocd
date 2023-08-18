@@ -18,7 +18,7 @@ env:
   resourceGroup: 'argocd-demo-rg'
   name: 'argocd-main-aks'
   vclusterName: 'vcluster-${{ github.event.inputs.environment }}-aks'
-  argo-ip: '${{ github.event.inputs.environment.argoip }}'
+  argo-ip: '${{ github.event.inputs.argoip }}'
   argo-username: 'admin'
   argo-password: '${{ github.event.inputs.argopassword }}'
 
@@ -61,9 +61,9 @@ jobs:
 
       - name: Argo CD Login and Cluster Add
         run: |
-          echo "${{ env.argo-ip }}\n"
-          echo "${{ env.argo-name }}\n"
-          echo "${{ env.argo-password }}\n"
+          echo "${{ env.argo-ip }}"
+          echo "${{ env.argo-username }}"
+          echo "${{ env.argo-password }}"
           sleep 10s
           argocd login ${{ env.argo-ip }} --username ${{ env.argo-name }} --password ${{ env.argo-password }}
           vcluster cluster add ${{ env.vclusterName }}
